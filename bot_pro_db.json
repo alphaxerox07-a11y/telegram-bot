@@ -1,0 +1,32 @@
+{
+    "menus": {
+        "\ud83c\udfe0 Main Menu": [
+            "HANDWRITTEN NOTES"
+        ],
+        "HANDWRITTEN NOTES": [
+            "MATHS 11TH(TK DON) EAJEE"
+        ],
+        "MATHS 11TH(TK DON) EAJEE": [
+            "BASIC MATHS",
+            "QUADRATIC EQUATIONS",
+            "TRIGONOMETRY IDENTITIES"
+        ]
+    },
+    "messages": {
+        "BASIC MATHS": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAOlamTcb8cTqroXkbzyiGI6sIC4JtsAAiwlAALogilXtZlmchgys9Q9BA",
+            "caption": ""
+        },
+        "QUADRATIC EQUATIONS": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAPBamTdvSHX08VGZvDvYQdrFPJpdncAAjIlAALogilXp_lQRQdbor49BA",
+            "caption": ""
+        },
+        "TRIGONOMETRY IDENTITIES": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAPNamTefZj5q0p1fze7oFTqONWW7ywAAjMlAALogilXkz03Fx5p_wY9BA",
+            "caption": ""
+        }
+    }
+}
