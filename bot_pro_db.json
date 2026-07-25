@@ -4,12 +4,23 @@
             "HANDWRITTEN NOTES"
         ],
         "HANDWRITTEN NOTES": [
-            "MATHS 11TH(TK DON) EAJEE"
+            "MATHS 11TH(TK DON) EAJEE",
+            "PC 11TH EAJEE",
+            "IOC 11TH AND 12TH EAJEE"
         ],
         "MATHS 11TH(TK DON) EAJEE": [
             "BASIC MATHS",
             "QUADRATIC EQUATIONS",
-            "TRIGONOMETRY IDENTITIES"
+            "TRIGONOMETRY IDENTITIES",
+            "SEQUENCE & SERIES",
+            "INDEFINITE INTEGRATION"
+        ],
+        "PC 11TH EAJEE": [
+            "SOME BASIC CONCEPTS OF CHEMISTRY",
+            "STRUCTURE OF ATOM"
+        ],
+        "IOC 11TH AND 12TH EAJEE": [
+            "PERIODIC CLASSIFICATIONS"
         ]
     },
     "messages": {
@@ -26,6 +37,31 @@
         "TRIGONOMETRY IDENTITIES": {
             "type": "document",
             "file_id": "BQACAgUAAxkBAAPNamTefZj5q0p1fze7oFTqONWW7ywAAjMlAALogilXkz03Fx5p_wY9BA",
+            "caption": ""
+        },
+        "MATHS 11TH(TK DON) SEQUENCE & SERIES": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAIBM2pk95IQTZVXF2FqHsPqdU9wS_o-AAJJJQAC6IIpV9knazEEloyrPQQ",
+            "caption": ""
+        },
+        "MATHS 11TH(TK DON) INDEFINITE INTEGRATION": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAIBPGpk-F48ARgZQvHcbgpecV-p4sgHAAJKJQAC6IIpVwptKijg3qZLPQQ",
+            "caption": ""
+        },
+        "SOME BASIC CONCEPTS OF CHEMISTRY": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAIBSmpk-bNdnSoVYf7n3Ywvxog-mqBZAAJLJQAC6IIpV3kzkDEKjcAiPQQ",
+            "caption": ""
+        },
+        "STRUCTURE OF ATOM": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAIBVWpk-mgoGaYNJCWY8DH9xjNHIDUAA0wlAALogilX3TLF82RVQKA9BA",
+            "caption": ""
+        },
+        "PERIODIC CLASSIFICATIONS": {
+            "type": "document",
+            "file_id": "BQACAgUAAxkBAAIBZWpk-x0DGB8WvieFiZ3LusTkDAruAAJNJQAC6IIpV7Tev1as1wysPQQ",
             "caption": ""
         }
     }

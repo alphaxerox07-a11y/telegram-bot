@@ -10,7 +10,7 @@ import threading  # Timer ke liye naya tool
 # ==========================================
 BOT_TOKEN = '8950867900:AAEc32AGBj4U6At3uvSSp379s1I8zix6YX0'  
 GROUP_ID = -1003668562553  
-INVITE_LINK = 'https://t.me/+NAYA_LINK_YAHAN_DAAL'
+INVITE_LINK = 'https://t.me/+l4NpDNT_cdUyZDNl'
 ADMIN_ID = 1927388197  
 
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -19,7 +19,7 @@ temp_state = {}
 
 # Kitne minute me delete karna hai? (20 minutes = 20 * 60 seconds)
 # Testing ke liye tu isko 60 rakh kar (1 minute) check kar sakta hai
-DELETE_TIME = 60 
+DELETE_TIME = 20 * 60 
 
 # ==========================================
 # 💣 AUTO-DELETE SYSTEM (Background Timer)
@@ -153,7 +153,7 @@ def send_welcome(message):
         bot.reply_to(message, f"Welcome {message.from_user.first_name}! 🎉")
         render_menu(message.chat.id, "🏠 Main Menu")
     else:
-        bot.reply_to(message, f"❌ Bhai, bot use karne ke liye group join karo!\n👉 Join Here: {INVITE_LINK}")
+        bot.reply_to(message, f"❌ Bot use karne ke liye group join karo!\n👉 Join Here: {INVITE_LINK}")
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('nav_'))
 def handle_nav(call):
@@ -185,7 +185,7 @@ def handle_nav(call):
         # Agar message successfully gaya, toh Timer laga do
         if sent_msg:
             # Ek warning bhej rahe hain user ko
-            warning_msg = bot.send_message(chat_id, "⏳ *Ye file 20 minute me auto-delete ho jayegi!*", parse_mode="Markdown")
+            warning_msg = bot.send_message(chat_id, "⏳ *Ye file 20 minute me auto-delete ho jayegi! Isliye file ko saved messages me forward kar lo! *", parse_mode="Markdown")
             
             # Timer Set (File aur Warning message dono delete honge 20 min baad)
             delete_later(chat_id, sent_msg.message_id, DELETE_TIME)
