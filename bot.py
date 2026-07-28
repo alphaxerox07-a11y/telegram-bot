@@ -1,5 +1,6 @@
 import telebot
 from telebot import types
+from keep_alive import keep_alive
 import threading
 import time
 from pymongo import MongoClient
@@ -219,4 +220,5 @@ def handle_nav(call):
             bot.answer_callback_query(call.id, "⚠️ File abhi upload nahi hui hai!")
 
 print("🚀 MONGO-DB WALA PRO BOT ZINDA HAI! ...")
+keep_alive()
 bot.infinity_polling()
