@@ -36,10 +36,8 @@ SPAM_COOLDOWN = 4
 DELETE_TIME = 20 * 60
 
 # ==========================================
-# 🧹 AUTO-DELETE GROUP JOIN/SERVICE MESSAGES
+# 🧹 GROUP EVENTS & ANALYTICS (Join/Leave Tracking)
 # ==========================================
-
-
 @bot.message_handler(
     content_types=[
         'new_chat_members',
@@ -49,30 +47,39 @@ DELETE_TIME = 20 * 60
         'delete_chat_photo',
     ]
 )
-def delete_system_messages(message):
-  try:
-    bot.delete_message(message.chat.id, message.message_id)
-  except Exception:
-    pass
-
-
-def delete_later(chat_id, message_id, delay):
-
-  def do_delete():
+def handle_group_events(message):
+    # 1. Pehle us transparent system message ko uda do
     try:
-      bot.delete_message(chat_id, message_id)
+        bot.delete_message(message.chat.id, message.message_id)
     except Exception:
-      pass
+        pass
 
-  threading.Timer(delay, do_delete).start()
+    # 2. Analytics Track Karo (Kisne Join kiya, Kisne Left kiya)
+    current_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-
-def check_membership(user_id):
-  try:
-    member = bot.get_chat_member(GROUP_ID, user_id)
-    return member.status in ['member', 'administrator', 'creator']
-  except Exception:
-    return False
+    if message.new_chat_members:
+        for new_member in message.new_chat_members:
+            if new_member.is_bot: continue # Bot ko track mat karo
+            users_col.update_one(
+                {"_id": new_member.id},
+                {
+                    "$inc": {"join_count": 1}, # Join count badhao
+                    "$set": {"status": "Joined", "last_join_date": current_time, "name": new_member.first_name}
+                },
+                upsert=True
+            )
+            
+    elif message.left_chat_member:
+        left_member = message.left_chat_member
+        if not left_member.is_bot:
+            users_col.update_one(
+                {"_id": left_member.id},
+                {
+                    "$inc": {"leave_count": 1}, # Leave count badhao
+                    "$set": {"status": "Left", "last_leave_date": current_time, "name": left_member.first_name}
+                },
+                upsert=True
+            )
 
 
 # ==========================================
@@ -366,7 +373,6 @@ def send_welcome(message):
       {
           "$setOnInsert": {"joined_date": current_time},
           "$set": {
-              "joined": True,
               "name": first_name,
               "username": username,
           },
@@ -382,11 +388,11 @@ def send_welcome(message):
         parse_mode="Markdown",
     )
   else:
+    # 🐛 FIX: Yahan 'HTML' parse_mode lagaya hai taaki Link ki wajah se crash na ho
     warn_msg = bot.reply_to(
         message,
-        f"❌ Bot use karne ke liye group join karo!\n👉 Join Here:"
-        f" {INVITE_LINK}\n\n*(⏳ Ye message 1 minute me auto-delete ho jayega)*",
-        parse_mode="Markdown",
+        f"❌ <b>Bot use karne ke liye group join karo!</b>\n👉 Join Here: {INVITE_LINK}\n\n<i>(⏳ Ye message 1 minute me auto-delete ho jayega)</i>",
+        parse_mode="HTML",
     )
     delete_later(chat_id, warn_msg.message_id, 60)
     delete_later(chat_id, message.message_id, 60)
