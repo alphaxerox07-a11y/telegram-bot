@@ -359,43 +359,48 @@ def get_menu_text(menu_name):
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-  user = message.from_user
-  user_id = user.id
-  chat_id = message.chat.id
+  try:
+      user = message.from_user
+      user_id = user.id
+      chat_id = message.chat.id
 
-  first_name = user.first_name if user.first_name else "No Name"
-  username = f"@{user.username}" if user.username else "No Username"
-  current_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+      first_name = user.first_name if user.first_name else "No Name"
+      username = f"@{user.username}" if user.username else "No Username"
+      current_time = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-  # MongoDB me Naam, Username aur Exact Date/Time save karna
-  users_col.update_one(
-      {"_id": user_id},
-      {
-          "$setOnInsert": {"joined_date": current_time},
-          "$set": {
-              "name": first_name,
-              "username": username,
+      # MongoDB me Naam, Username aur Exact Date/Time save karna
+      users_col.update_one(
+          {"_id": user_id},
+          {
+              "$setOnInsert": {"joined_date": current_time},
+              "$set": {
+                  "name": first_name,
+                  "username": username,
+              },
           },
-      },
-      upsert=True,
-  )
+          upsert=True,
+      )
 
-  if check_membership(user_id):
-    bot.send_message(
-        chat_id,
-        get_menu_text("🏠 Main Menu"),
-        reply_markup=get_menu_markup("🏠 Main Menu"),
-        parse_mode="Markdown",
-    )
-  else:
-    # 🐛 FIX: Yahan 'HTML' parse_mode lagaya hai taaki Link ki wajah se crash na ho
-    warn_msg = bot.reply_to(
-        message,
-        f"❌ <b>Bot use karne ke liye group join karo!</b>\n👉 Join Here: {INVITE_LINK}\n\n<i>(⏳ Ye message 1 minute me auto-delete ho jayega)</i>",
-        parse_mode="HTML",
-    )
-    delete_later(chat_id, warn_msg.message_id, 60)
-    delete_later(chat_id, message.message_id, 60)
+      if check_membership(user_id):
+        bot.send_message(
+            chat_id,
+            get_menu_text("🏠 Main Menu"),
+            reply_markup=get_menu_markup("🏠 Main Menu"),
+            parse_mode="Markdown",
+        )
+      else:
+        # 🐛 HTML parse_mode for safe links
+        warn_msg = bot.reply_to(
+            message,
+            f"❌ <b>Bot use karne ke liye group join karo!</b>\n👉 Join Here: {INVITE_LINK}\n\n<i>(⏳ Ye message 1 minute me auto-delete ho jayega)</i>",
+            parse_mode="HTML",
+        )
+        delete_later(chat_id, warn_msg.message_id, 60)
+        delete_later(chat_id, message.message_id, 60)
+        
+  except Exception as e:
+      # Agar aage se koi bhi bug aayega, toh bot tujhe chat me hi error bata dega!
+      bot.send_message(message.chat.id, f"⚠️ **Developer Error:**\nBhai code me ye gadbad hai: `{e}`", parse_mode="Markdown")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('nav_'))
