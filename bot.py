@@ -399,7 +399,7 @@ def handle_nav(call):
   if user_id in user_spam_dict:
     if (current_time - user_spam_dict[user_id]) < SPAM_COOLDOWN:
       bot.answer_callback_query(
-          call.id, "⚠️ Bhai aaram se! 4 second wait karo.", show_alert=True
+          call.id, "⚠️ 4 second wait karo.", show_alert=True
       )
       return
   user_spam_dict[user_id] = current_time
