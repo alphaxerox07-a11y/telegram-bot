@@ -15,7 +15,7 @@ INVITE_LINK = 'https://t.me/+l4NpDNT_cdUyZDNl'
 ADMIN_ID = 1927388197
 
 # 🗄️ MONGODB CONNECTION
-MONGO_URL = "YAHAN_APNI_MONGODB_LINK_PASTE_KAR_DENA"
+MONGO_URL = "mongodb+srv://alphaxerox07_db_user:7053610990@cluster0.2nbabsq.mongodb.net/?appName=Cluster0"
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
