@@ -81,6 +81,21 @@ def handle_group_events(message):
                 upsert=True
             )
 
+def delete_later(chat_id, message_id, delay):
+    def do_delete():
+        try:
+            bot.delete_message(chat_id, message_id)
+        except Exception:
+            pass
+    threading.Timer(delay, do_delete).start()
+
+def check_membership(user_id):
+    try:
+        member = bot.get_chat_member(GROUP_ID, user_id)
+        return member.status in ['member', 'administrator', 'creator']
+    except Exception:
+        return False
+
 
 # ==========================================
 # 👑 PRO ADMIN PANEL & MANAGEMENT
@@ -399,8 +414,11 @@ def send_welcome(message):
         delete_later(chat_id, message.message_id, 60)
         
   except Exception as e:
-      # Agar aage se koi bhi bug aayega, toh bot tujhe chat me hi error bata dega!
-      bot.send_message(message.chat.id, f"⚠️ **Developer Error:**\nBhai code me ye gadbad hai: `{e}`", parse_mode="Markdown")
+      # 1. Yeh error message chupke se sirf TUJHE (Admin ko) tere DM me aayega
+      bot.send_message(ADMIN_ID, f"⚠️ **Developer Alert!**\nUser: {message.from_user.first_name}\nBug: `{e}`", parse_mode="Markdown")
+      
+      # 2. Bacchon ko bas ye simple sa polite message dikhega (Code nahi)
+      bot.send_message(message.chat.id, "⚠️ Oops! Bot me abhi kuch technical update chal raha hai. Admin ko contact karo.")
 
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('nav_'))
