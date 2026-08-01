@@ -144,8 +144,10 @@ def handle_admin(call):
           )
       )
     bot.send_message(
-        chat_id, "Naya button kahan lagana hai?", reply_markup=markup
-    )
+                user["_id"],
+                f"🔔 **NEW CHAPTER ADDED!**\n\n📚 Naya material **'{btn_name}'** upload kar diya gaya hai.\n\n👉 Jaldi se check karne ke liye /start par click karo!",
+                parse_mode="Markdown",
+            )
 
   elif call.data == "admin_del_btn":
     markup = types.InlineKeyboardMarkup(row_width=1)
